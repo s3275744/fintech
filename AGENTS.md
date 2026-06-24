@@ -26,6 +26,7 @@ The agent-supported workflow used repeatable checks before upload:
 - Python unit tests with `pytest`.
 - Generated-PDF layout regression tests.
 - Playwright browser tests that simulate user clicks through the main review workflow, including filtering, client detail review, manual correction, evidence handling, approval, filing, and payload preview.
+- A public Playwright CLI skill reference is included under `.agents/skills/playwright-cli/` to document the agent-side browser automation workflow.
 - Docker build and `/healthz` smoke checks.
 - Azure Container Apps deployment smoke checks.
 

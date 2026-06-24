@@ -1,12 +1,16 @@
 # Fiskal VAT Review Sandbox
 
+![Python 3.12](https://img.shields.io/badge/Python-3.12-3776AB?logo=python&logoColor=white)
+![Playwright Tested](https://img.shields.io/badge/Playwright-tested-2EAD33?logo=playwright&logoColor=white)
+![Azure Container Apps](https://img.shields.io/badge/Azure%20Container%20Apps-deployed-0078D4?logo=microsoftazure&logoColor=white)
+
 Fiskal is a sandbox MVP for a Dutch bookkeeping-office VAT review co-pilot. It helps a bookkeeper inspect quarterly BTW work before filing by combining sample ledger exports, generated source PDFs, deterministic VAT checks, human review flows, and a simulated ledger write-back payload.
 
 The app is intentionally not connected to real customers, ledgers, banks, SBR, Digipoort, or tax-filing systems.
 
 ## Topic Tags
 
-`fintech` `vat` `btw` `bookkeeping` `flask` `docker` `azure-container-apps` `bicep` `playwright` `csv-data` `dutch-tax` `sandbox`
+`fintech` `vat` `btw` `bookkeeping` `flask` `docker` `azure-container-apps` `bicep` `playwright` `ai-agents` `github-copilot` `csv-data` `dutch-tax` `sandbox`
 
 ## Requirements
 
@@ -168,6 +172,8 @@ infra/                  Azure Bicep deployment files
 
 ## Agent Orchestration
 
-Public-safe agent workflow notes are documented in `AGENTS.md`. Project-specific GitHub Copilot guidance is documented in `.github/copilot-instructions.md`.
+Public-safe agent workflow notes are documented in `AGENTS.md` and `.agents/README.md`. Project-specific GitHub Copilot guidance is documented in `.github/copilot-instructions.md`.
+
+The repository also includes the public Playwright CLI skill reference at `.agents/skills/playwright-cli/SKILL.md`. That skill documents the browser-automation workflow used around Playwright-assisted testing; the repeatable regression command remains `npm run test:e2e`.
 
 No private prompts, chat transcripts, local credentials, generated caches, or test output folders are part of the repository.
