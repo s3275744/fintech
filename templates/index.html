@@ -23,10 +23,11 @@
       <h1>{{ dashboard.office.office_name }}</h1>
       <p>{{ dashboard.office.city }} · {{ dashboard.office.quarter }} · deadline {{ dashboard.office.deadline }}</p>
     </div>
-    <form method="post" action="{{ url_for('reset_demo') }}">
+    <form class="reset-form" method="post" action="{{ url_for('reset_demo') }}">
       <input type="hidden" name="profile" value="{{ active_profile }}">
       <input type="hidden" name="next" value="{{ url_for('index', profile=active_profile) }}">
-      <button class="btn secondary" type="submit">Reset sandbox state</button>
+      <button class="btn reset-button" type="submit"><span aria-hidden="true">!</span> Reset sandbox state</button>
+      <small class="reset-note">Resets your changes.</small>
     </form>
   </section>
 

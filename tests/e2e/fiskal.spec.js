@@ -3,6 +3,10 @@ const { test, expect } = require('@playwright/test');
 test('loads the dashboard and switches profiles', async ({ page }) => {
   await page.goto('/');
   await expect(page.getByRole('heading', { name: 'Noord Administratie' })).toBeVisible();
+  const dashboardReset = page.getByRole('button', { name: 'Reset sandbox state' });
+  await expect(dashboardReset).toHaveClass(/reset-button/);
+  await expect(dashboardReset).toHaveCSS('background-color', 'rgb(178, 58, 72)');
+  await expect(page.locator('.reset-note')).toHaveText('Resets your changes.');
 
   await page.getByRole('link', { name: 'Medium' }).click();
   await expect(page.getByRole('heading', { name: 'Maas & Co Administratie' })).toBeVisible();
@@ -29,6 +33,10 @@ test('filters flagged cases and opens a detail page', async ({ page }) => {
 test('corrects transaction issues and turns a review client ready', async ({ page }) => {
   await page.goto('/client/small/S-003');
   await expect(page.getByRole('heading', { name: 'Hein Reparatie' })).toBeVisible();
+  const detailReset = page.getByRole('button', { name: 'Reset sandbox state' });
+  await expect(detailReset).toHaveClass(/reset-button/);
+  await expect(detailReset).toHaveCSS('background-color', 'rgb(178, 58, 72)');
+  await expect(page.locator('.reset-note')).toHaveText('Resets your changes.');
   await expect(page.getByText('1 transaction issue(s) still open')).toBeVisible();
   const receiptRow = page.locator('tr.transaction-row', { hasText: 'S-T008' });
   await expect(receiptRow).toContainText('Missing');

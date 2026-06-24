@@ -19,10 +19,11 @@
 <main class="page detail-page">
   <div class="detail-actions">
     <a class="back-link" href="{{ url_for('index', profile=active_profile) }}"><span class="back-icon" aria-hidden="true">&larr;</span> Back to queue</a>
-    <form method="post" action="{{ url_for('reset_demo') }}">
+    <form class="reset-form" method="post" action="{{ url_for('reset_demo') }}">
       <input type="hidden" name="profile" value="{{ active_profile }}">
       <input type="hidden" name="next" value="{{ url_for('client_detail', profile_name=active_profile, client_id=summary.client_id) }}">
-      <button class="btn secondary" type="submit">Reset sandbox state</button>
+      <button class="btn reset-button" type="submit"><span aria-hidden="true">!</span> Reset sandbox state</button>
+      <small class="reset-note">Resets your changes.</small>
     </form>
   </div>
   <section class="hero-panel">
