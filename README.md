@@ -1,185 +1,173 @@
 # Fiskal VAT Review Sandbox
 
-## Quick View
+Fiskal is a sandbox MVP for a Dutch bookkeeping-office VAT review co-pilot. It helps a bookkeeper inspect quarterly BTW work before filing by combining sample ledger exports, generated source PDFs, deterministic VAT checks, human review flows, and a simulated ledger write-back payload.
 
-- `Fiskal` is a BTW co-pilot for Dutch bookkeeping offices.
-- It helps bookkeepers review quarterly VAT work before approval.
-- It uses sample ledger data, local review flows, and simulated write-back payloads.
-- It does not call real ledger, bank, SBR, or Digipoort APIs.
+The app is intentionally not connected to real customers, ledgers, banks, SBR, Digipoort, or tax-filing systems.
 
-## Core Flow
+## Topic Tags
 
-- Load CSV exports from `Moneybird`, `Exact Online`, `Twinfield`, and `SnelStart`.
-- Check each client with explainable VAT rules.
-- Assign a status and confidence score.
-- Show the exact source transactions that need work.
-- Let the bookkeeper review, correct, request evidence, and approve.
-- Preview the JSON payload that would be sent back to a ledger API.
+`fintech` `vat` `btw` `bookkeeping` `flask` `docker` `azure-container-apps` `bicep` `playwright` `csv-data` `dutch-tax` `sandbox`
 
-## Features
+## Requirements
 
-- `Small`, `Medium`, and `Large` bookkeeping-office profiles.
-- Q2 `2026` VAT queue.
-- Statuses: `Ready`, `Review`, `Flagged`, and `Filed`.
-- Transaction-level issue labels.
-- Evidence columns for `VAT evidence` and `Transport proof`.
-- Sample PDFs for every transaction.
-- Hard-to-OCR receipt values for `Review` cases.
-- Manual extraction fields for human review.
-- Simulated email replies and evidence PDFs for `Flagged` cases.
-- Reset action for approvals, manual values, and evidence replies.
-- Docker support.
-- Unit tests and Playwright browser tests.
+- Python `3.12` (`3.12.7` was used for development and testing)
+- Node.js `20+` for Playwright browser tests
+- Docker Desktop for container runs
+- Azure CLI for Azure deployment
 
-## Scope
+## Install And Run
 
-- No real customer data.
-- No real ledger OAuth.
-- No real bank or PSD2 connection.
-- No real tax filing.
-- No production security model.
-- No machine-learning training pipeline.
+Run these commands from the repository root.
+
+### Windows PowerShell
+
+```powershell
+python --version
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
+python -m pip install --upgrade pip
+python -m pip install -r requirements.txt
+python app.py
+```
+
+### macOS Or Linux
+
+```bash
+python3.12 --version
+python3.12 -m venv .venv
+source .venv/bin/activate
+python -m pip install --upgrade pip
+python -m pip install -r requirements.txt
+python app.py
+```
+
+Open `http://localhost:8000`.
+
+## Run Tests
+
+Python tests:
+
+```powershell
+python --version
+python -m pytest tests
+```
+
+Browser tests:
+
+```powershell
+npm ci
+npx playwright install chromium
+npm run test:e2e
+```
+
+The Playwright tests simulate real browser clicks through the review queue, client detail pages, evidence flow, manual review flow, approval flow, and payload preview. They were used to automatically verify agent-made UI and workflow changes.
+
+## Run With Docker
+
+```powershell
+docker build -t fiskal-vat-review .
+docker run --rm -p 8000:8000 fiskal-vat-review
+```
+
+Open `http://localhost:8000`.
+
+## Deploy To Azure
+
+The Bicep template in `infra/main.bicep` deploys the app to Azure Container Apps. It creates:
+
+- Azure Container Registry
+- Log Analytics workspace
+- Container Apps managed environment
+- Public Container App with `/healthz` probes
+
+Current hosted URL:
+
+`https://fiskal-app.happycliff-ffe64e1f.swedencentral.azurecontainerapps.io`
+
+Deploy from the repository root:
+
+```powershell
+az login
+.\infra\deploy.ps1 -ResourceGroup rg-AgentExperiment -Location swedencentral -AppName fiskal -ImageTag latest
+```
+
+Manual Azure commands are documented in `infra/README.md`.
+
+## Core Workflow
+
+1. Load CSV exports from Moneybird, Exact Online, Twinfield, and SnelStart sample ledgers.
+2. Group transactions by client and quarter.
+3. Apply deterministic VAT review rules.
+4. Assign each client one public status: `Ready`, `Review`, `Flagged`, or `Filed`.
+5. Show the source transaction rows and generated source PDFs behind each warning.
+6. Let the bookkeeper enter missing receipt values or request evidence.
+7. Move resolved clients to `Ready`.
+8. Approve and file ready clients inside the sandbox.
+9. Preview the simulated ledger payload. No external API call is made.
+
+## Status Meaning
+
+- `Ready`: no open warnings that need a human check.
+- `Review`: the value should exist in the source PDF, but OCR/manual extraction needs a human check.
+- `Flagged`: external evidence or compliance proof is missing.
+- `Filed`: the CSV says the client was already filed, or the bookkeeper approved and filed it in the sandbox.
 
 ## Rule Engine
 
 - Heuristic and explainable.
 - Not machine learning.
-- Starts each client near `96%` confidence.
-- Lowers the score with fixed warning penalties.
-- Adds a small deterministic client-ID adjustment.
-- Uses the score as an attention signal.
+- Uses fixed warning penalties and a small deterministic client-ID adjustment.
 - Keeps final approval with the bookkeeper.
-
-## Warning Penalties
-
-| Signal | Penalty |
-| --- | ---: |
-| Unclear receipt extraction | `-8` |
-| Reverse charge or foreign B2B case | `-22` |
-| Unknown VAT code | `-28` |
-| Other flagged exception | `-12` |
-
-## Status Meaning
-
-- `Ready`: no open warnings that need a human check.
-- `Review`: source PDF value exists, but OCR confidence is low.
-- `Flagged`: external evidence is missing.
-- `Filed`: CSV data says the client was already filed, or the bookkeeper approved and filed it in the sandbox.
-
-## Transaction Review
-
-- `Clear`: no issue found on the row.
-- `Review`: open the PDF and enter the value manually.
-- `Flagged`: contact the company for missing evidence.
-- `Corrected`: value entered or evidence PDF accepted.
-
-## Evidence Rules
-
-- `EU_REVERSE`: `VAT to be accounted for by the recipient`.
-- Reverse-charge services need `Buyer VAT number evidence`.
-- Intra-EU goods shipments also need `Transport proof`.
-- Service rows show `Not required` when transport proof is not needed.
-- Goods-shipment rows show `Missing` until transport evidence is accepted.
-- Accepted evidence fills the VAT number and transport reference.
 
 ## Sample Data
 
-- `data/profiles/small/`: small bookkeeping office.
-- `data/profiles/medium/`: medium bookkeeping office.
-- `data/profiles/large/`: large bookkeeping office.
+The repository includes three bookkeeping-office profiles:
 
-| File | Contains |
+- `data/profiles/small/`
+- `data/profiles/medium/`
+- `data/profiles/large/`
+
+Each profile contains:
+
+| File | Purpose |
 | --- | --- |
-| `office.csv` | Office profile |
+| `office.csv` | Bookkeeping office profile |
 | `clients.csv` | Client accounts |
 | `transactions.csv` | Ledger rows |
 | `exceptions.csv` | Flagged evidence signals |
 
-## Included Edge Cases
+Included edge cases:
 
-- Hard-to-read receipt IDs.
-- Foreign B2B reverse-charge rows.
-- Unknown VAT-code rows.
-- Missing VAT-number evidence.
-- Missing transport proof for EU goods shipments.
+- Hard-to-read handwritten receipt IDs
+- Reverse-charge service rows
+- Intra-EU goods rows needing transport proof
+- Missing buyer VAT-number evidence
+- Unknown VAT-code rows
+- Clients that are already filed in source data
 
-## Run Locally
+## Generated PDFs
 
-```powershell
-cd C:\Users\stijn\Desktop\BAM\fintech\assignment2\github_folder
-python -m venv .venv
-.\.venv\Scripts\Activate.ps1
-pip install -r requirements.txt
-python app.py
+Fiskal generates local sample PDFs for source invoices, receipts, and evidence documents. These PDFs are generated from sample data and do not contain real customer documents.
+
+The test suite includes a PyMuPDF layout check that verifies generated PDF text stays inside the page and that money columns do not overlap.
+
+## Project Structure
+
+```text
+app.py                  Flask routes and session workflow
+fiskal/data_loader.py   CSV loading and normalization
+fiskal/rules.py         Deterministic VAT review rules
+fiskal/payloads.py      Simulated ledger payload builder
+fiskal/sample_pdf.py    Generated sample/evidence PDF renderer
+templates/              Dashboard and client-detail HTML
+static/                 CSS
+data/profiles/          Small, medium, and large sample datasets
+tests/                  Python and Playwright regression tests
+infra/                  Azure Bicep deployment files
 ```
-
-- Open `http://localhost:8000`.
-
-## Run With Docker
-
-```powershell
-cd C:\Users\stijn\Desktop\BAM\fintech\assignment2\github_folder
-docker build -t fiskal-vat-review .
-docker run --rm -p 8000:8000 fiskal-vat-review
-```
-
-- Open `http://localhost:8000`.
-
-## Deploy To Azure
-
-The `infra/main.bicep` template deploys the sandbox to Azure Container Apps in resource group `rg-AgentExperiment`. It creates an Azure Container Registry, Log Analytics workspace, Container Apps environment, and public Container App with health probes.
-
-Current hosted URL: `https://fiskal-app.happycliff-ffe64e1f.swedencentral.azurecontainerapps.io`
-
-```powershell
-cd C:\Users\stijn\Desktop\BAM\fintech\assignment2\github_folder
-az login
-.\infra\deploy.ps1 -ResourceGroup rg-AgentExperiment -Location swedencentral -AppName fiskal -ImageTag latest
-```
-
-Detailed manual commands are in `infra/README.md`.
-
-## Run Tests
-
-```powershell
-python -m pytest
-```
-
-```powershell
-npm install
-npx playwright install chromium
-npm run test:e2e
-```
-
-## Walkthrough
-
-1. Open the app.
-2. Switch between `Small`, `Medium`, and `Large`.
-3. Filter by `Review` and `Flagged`.
-4. Open a client with warnings.
-5. Check the confidence score.
-6. Open the source transaction row.
-7. Open the sample PDF.
-8. For `Review`, enter the PDF value manually.
-9. If the value is unreadable, use the client-contact fallback.
-10. For `Flagged`, contact the company for evidence.
-11. Analyse the received evidence PDF.
-12. Approve the client when it becomes `Ready`.
-13. Check the simulated ledger payload.
-14. Use `Reset sandbox state` to clear the local review state.
-
-## Suggested Topics
-
-- `fintech`
-- `vat`
-- `bookkeeping`
-- `flask`
-- `docker`
-- `playwright`
-- `csv-data`
-- `dutch-tax`
-- `sandbox`
 
 ## Agent Orchestration
 
-Public-safe agent workflow notes are documented in `AGENTS.md` and `.agents/README.md`.
+Public-safe agent workflow notes are documented in `AGENTS.md`. Project-specific GitHub Copilot guidance is documented in `.github/copilot-instructions.md`.
+
+No private prompts, chat transcripts, local credentials, generated caches, or test output folders are part of the repository.
