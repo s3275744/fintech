@@ -1,0 +1,3 @@
+client_id,issue_type,severity,detail
+M-004,Foreign B2B reverse charge,flag,Large German transport invoice needs a reverse-charge check.
+M-014,Intra-EU goods,flag,Goods to Belgium need VAT number and evidence check.

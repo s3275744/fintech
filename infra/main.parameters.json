@@ -1,0 +1,24 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "appName": {
+      "value": "fiskal"
+    },
+    "imageTag": {
+      "value": "latest"
+    },
+    "targetPort": {
+      "value": 8000
+    },
+    "healthProbePath": {
+      "value": "/healthz"
+    },
+    "minReplicas": {
+      "value": 0
+    },
+    "maxReplicas": {
+      "value": 1
+    }
+  }
+}

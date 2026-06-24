@@ -1,0 +1,4 @@
+client_id,issue_type,severity,detail
+L-003,Intra-EU food shipment,flag,EU goods sale needs VAT number evidence and transport proof.
+L-008,UK cross-border VAT,flag,Post-Brexit UK logistics treatment is high risk.
+L-014,Mixed telecom VAT,flag,Telecom bundle uses an unknown mixed VAT code.

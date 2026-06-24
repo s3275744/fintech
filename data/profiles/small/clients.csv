@@ -1,0 +1,9 @@
+client_id,name,kvk,ledger,sector,vat_scheme,already_filed,ytd_revenue_before_q2
+S-001,Hennie Tuinaanleg,72104561,Moneybird,Landscaping,standard,no,8200.00
+S-002,Eef Freelance Schrijven,69923445,Moneybird,Writing,standard,no,6400.00
+S-003,Hein Reparatie,68334782,SnelStart,Repairs,kor,no,13750.00
+S-004,Ans Natuursteenwerk,61447093,SnelStart,Stone work,standard,no,9100.00
+S-005,Kees Elektricien B.V.,55621108,Exact Online,Electrical work,standard,no,19000.00
+S-006,Greet Schoonmaak Services,73115624,Moneybird,Cleaning,standard,no,7600.00
+S-007,Dirk Consultancy,70228341,Twinfield,Consulting,standard,yes,22000.00
+S-008,Ilse Grafisch Ontwerp,8144 5729,Moneybird,Design,standard,no,11800.00

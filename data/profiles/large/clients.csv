@@ -1,0 +1,25 @@
+client_id,name,kvk,ledger,sector,vat_scheme,already_filed,ytd_revenue_before_q2
+L-001,AgroLogistics Holding,33208814,Twinfield,Logistics,standard,no,156000.00
+L-002,Synergy Digital Solutions,34506192,Exact Online,Software,standard,no,121000.00
+L-003,EuroFood Distributors,35112447,Moneybird,Food distribution,standard,no,188000.00
+L-004,Nordic Property Fund,36224188,Twinfield,Property,standard,no,250000.00
+L-005,Zenith Manufacturing B.V.,37445261,SnelStart,Manufacturing,standard,no,172000.00
+L-006,Cleantech Innovations,38667123,Moneybird,Cleantech,standard,no,118000.00
+L-007,Primus Healthcare GmbH,39781245,Exact Online,Healthcare,standard,no,97000.00
+L-008,Vertex Logistics Ltd,40889357,Twinfield,Logistics,standard,no,201000.00
+L-009,Luxe Retail Amsterdam,41904411,Moneybird,Retail,standard,no,154000.00
+L-010,Pinnacle Energy Solutions,42016523,SnelStart,Energy,standard,no,231000.00
+L-011,Castellan Real Estate,43122634,Exact Online,Real estate,standard,no,213000.00
+L-012,Nexgen IT Consulting,44238746,Moneybird,IT consulting,standard,no,88000.00
+L-013,Premier Financial Services,45344858,Twinfield,Financial services,standard,no,132000.00
+L-014,Spectrum Communications,46450969,Moneybird,Telecom,standard,no,105000.00
+L-015,Fortress Security Systems,47567081,Exact Online,Security,standard,no,144000.00
+L-016,Maritime Parts Rotterdam,48673192,SnelStart,Trade,standard,no,165000.00
+L-017,Urban Green Architects,49789203,Moneybird,Architecture,standard,no,92000.00
+L-018,DataBridge Analytics,50895314,Twinfield,Data services,standard,no,73000.00
+L-019,Blue Canal Events,51901425,Moneybird,Events,standard,yes,64000.00
+L-020,Delta HR Services,52017536,Exact Online,HR services,standard,no,83000.00
+L-021,Koopman Drone Inspecties,53123647,SnelStart,Inspection,standard,no,57000.00
+L-022,Medical Design Lab,54239758,Twinfield,Design,standard,no,126000.00
+L-023,North Sea Repair,55345869,Moneybird,Repairs,standard,no,111000.00
+L-024,Rijnmond Training Group,56451970,Exact Online,Training,standard,no,69000.00

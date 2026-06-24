@@ -1,0 +1,72 @@
+transaction_id,date,client_id,direction,counterparty,description,amount,vat_amount,vat_rate,vat_code,receipt_id,source_ledger_id
+L-T001,2026-04-04,L-001,sale,FreshChain NL,Transport planning,48500.00,10185.00,21%,NL_HIGH,INV-L001-04,tw-l001
+L-T002,2026-05-18,L-001,purchase,Shell Fleet,Fuel cards,7600.00,1596.00,21%,NL_HIGH,SHF-0518-88210,tw-l002
+L-T003,2026-06-21,L-001,sale,Cold Store BV,Quarter route support,31200.00,6552.00,21%,NL_HIGH,INV-L001-06,tw-l003
+L-T004,2026-04-08,L-002,sale,ScaleUp Client,SaaS implementation,39200.00,8232.00,21%,NL_HIGH,INV-L002-04,ex-l004
+L-T005,2026-05-07,L-002,purchase,AWS EMEA,Cloud usage,6200.00,1302.00,21%,NL_HIGH,AWS-EU-0507-9413,ex-l005
+L-T006,2026-06-12,L-002,sale,Insurance Platform,Integration sprint,25800.00,5418.00,21%,NL_HIGH,INV-L002-06,ex-l006
+L-T007,2026-04-03,L-003,sale,Belgian Buyer,Intra-EU food shipment,62400.00,0.00,0%,EU_REVERSE,INV-L003-BE,mb-l007
+L-T008,2026-05-14,L-003,purchase,Koeltransport Partner,Distribution service,8900.00,1869.00,21%,NL_HIGH,,mb-l008
+L-T009,2026-06-27,L-003,sale,Local Supermarket,Local food shipment,28100.00,5901.00,21%,NL_HIGH,INV-L003-06,mb-l009
+L-T010,2026-04-11,L-004,sale,Office Tenant,Rent service fee,71200.00,14952.00,21%,NL_HIGH,INV-L004-04,tw-l010
+L-T011,2026-05-23,L-004,purchase,Property Maintenance,Building repair,14600.00,3066.00,21%,NL_HIGH,PM-0523-6618,tw-l011
+L-T012,2026-06-17,L-004,sale,German Partner,Property advisory Germany,12600.00,0.00,0%,EU_REVERSE,INV-L004-DE,tw-l012
+L-T013,2026-04-09,L-005,sale,Machine Buyer,Production batch,58400.00,12264.00,21%,NL_HIGH,INV-L005-04,sn-l013
+L-T014,2026-05-29,L-005,purchase,Steel Supplier,Raw materials,22100.00,4641.00,21%,NL_HIGH,STL-0529-7402,sn-l014
+L-T015,2026-06-25,L-005,sale,Machine Buyer,Production batch,42100.00,8841.00,21%,NL_HIGH,INV-L005-06,sn-l015
+L-T016,2026-04-18,L-006,sale,Energy Pilot,Prototype work,29600.00,6216.00,21%,NL_HIGH,INV-L006-04,mb-l016
+L-T017,2026-05-05,L-006,purchase,Laboratory Store,Testing material,5400.00,1134.00,21%,NL_HIGH,LAB-0505-3198,mb-l017
+L-T018,2026-06-18,L-006,sale,French Customer,Cleantech advice France,14800.00,0.00,0%,EU_REVERSE,INV-L006-FR,mb-l018
+L-T019,2026-04-22,L-007,sale,Clinic Group,Medical admin project,24800.00,5208.00,21%,NL_HIGH,INV-L007-04,ex-l019
+L-T020,2026-05-13,L-007,purchase,MedSoft GmbH,Software support,3100.00,0.00,0%,EU_REVERSE,MSG-0513-DE-208,ex-l020
+L-T021,2026-06-09,L-007,sale,Clinic Group,Second sprint,18200.00,3822.00,21%,NL_HIGH,INV-L007-06,ex-l021
+L-T022,2026-04-16,L-008,sale,UK Retailer,Post-Brexit logistics,48200.00,0.00,0%,EU_REVERSE,INV-L008-UK,tw-l022
+L-T023,2026-05-21,L-008,purchase,Ferry Operator,Freight ferry,7700.00,1617.00,21%,NL_HIGH,FERRY-0521-6034,tw-l023
+L-T024,2026-06-24,L-008,sale,Local Warehouse,Warehouse service,26500.00,5565.00,21%,NL_HIGH,INV-L008-06,tw-l024
+L-T025,2026-04-02,L-009,sale,Amsterdam Shopper,Retail sales batch,39200.00,8232.00,21%,NL_HIGH,INV-L009-04,mb-l025
+L-T026,2026-05-10,L-009,purchase,Luxe Import,Stock purchase,18100.00,3801.00,21%,NL_HIGH,LUX-0510-22801,mb-l026
+L-T027,2026-06-19,L-009,sale,Amsterdam Shopper,Retail sales batch,33800.00,7098.00,21%,NL_HIGH,INV-L009-06,mb-l027
+L-T028,2026-04-12,L-010,sale,Energy Client,Solar advisory,61500.00,12915.00,21%,NL_HIGH,INV-L010-04,sn-l028
+L-T029,2026-05-28,L-010,purchase,Grid Partner,Grid study,9200.00,1932.00,21%,NL_HIGH,GRID-0528-7176,sn-l029
+L-T030,2026-06-20,L-010,sale,Energy Client,Follow-up design,38200.00,8022.00,21%,NL_HIGH,INV-L010-06,sn-l030
+L-T031,2026-04-17,L-011,sale,Property Client,Asset review,44800.00,9408.00,21%,NL_HIGH,INV-L011-04,ex-l031
+L-T032,2026-05-18,L-011,purchase,Legal Notary,Notary expense,2100.00,441.00,21%,NL_HIGH,LN-0518-0944,ex-l032
+L-T033,2026-06-26,L-011,sale,DE Real Estate AG,German lease work,11600.00,0.00,0%,EU_REVERSE,INV-L011-DE,ex-l033
+L-T034,2026-04-07,L-012,sale,Online Retailer,IT support,21800.00,4578.00,21%,NL_HIGH,INV-L012-04,mb-l034
+L-T035,2026-05-07,L-012,purchase,GitHub,Software tools,590.00,123.90,21%,NL_HIGH,,mb-l035
+L-T036,2026-06-14,L-012,sale,Online Retailer,Data migration,16200.00,3402.00,21%,NL_HIGH,INV-L012-06,mb-l036
+L-T037,2026-04-25,L-013,sale,Fund Client,Financial workflow,32400.00,6804.00,21%,NL_HIGH,INV-L013-04,tw-l037
+L-T038,2026-05-17,L-013,purchase,Training Institute,Compliance course,1800.00,378.00,21%,NL_HIGH,TRN-0517-8840,tw-l038
+L-T039,2026-06-23,L-013,sale,Fund Client,Risk workshop,21500.00,4515.00,21%,NL_HIGH,INV-L013-06,tw-l039
+L-T040,2026-04-13,L-014,sale,Telecom Client,Service package,26800.00,5628.00,21%,NL_HIGH,INV-L014-04,mb-l040
+L-T041,2026-05-25,L-014,purchase,Network Supplier,Hardware,8400.00,1764.00,21%,NL_HIGH,NET-0525-5109,mb-l041
+L-T042,2026-06-16,L-014,sale,Telecom Client,Data service bundle,19300.00,4053.00,21%,VAT_MIXED,INV-L014-06,mb-l042
+L-T043,2026-04-26,L-015,sale,Security Client,CCTV installation,37200.00,7812.00,21%,NL_HIGH,INV-L015-04,ex-l043
+L-T044,2026-05-03,L-015,purchase,Camera Supplier,Cameras,12600.00,2646.00,21%,NL_HIGH,CAM-0503-6742,ex-l044
+L-T045,2026-06-11,L-015,sale,Security Client,Maintenance,9400.00,1974.00,21%,NL_HIGH,INV-L015-06,ex-l045
+L-T046,2026-04-06,L-016,sale,Shipyard Client,Parts delivery,28600.00,6006.00,21%,NL_HIGH,INV-L016-04,sn-l046
+L-T047,2026-05-22,L-016,purchase,Maritime Import,Imported parts,15800.00,3318.00,21%,NL_HIGH,MAR-0522-8815,sn-l047
+L-T048,2026-06-28,L-016,sale,Belgian Shipyard,Parts EU sale,17400.00,0.00,0%,EU_REVERSE,INV-L016-BE,sn-l048
+L-T049,2026-04-01,L-017,sale,City Project,Landscape design,19600.00,4116.00,21%,NL_HIGH,INV-L017-04,mb-l049
+L-T050,2026-05-16,L-017,purchase,Adobe Systems,Software,330.00,69.30,21%,NL_HIGH,ADBE-0516-4037,mb-l050
+L-T051,2026-06-13,L-017,sale,City Project,Design update,12800.00,2688.00,21%,NL_HIGH,INV-L017-06,mb-l051
+L-T052,2026-04-19,L-018,sale,Data Client,Dashboard build,25400.00,5334.00,21%,NL_HIGH,INV-L018-04,tw-l052
+L-T053,2026-05-31,L-018,purchase,Azure,Cloud compute,2200.00,462.00,21%,NL_HIGH,AZ-0531-6620,tw-l053
+L-T054,2026-06-29,L-018,sale,Data Client,Model review,13600.00,2856.00,21%,NL_HIGH,INV-L018-06,tw-l054
+L-T055,2026-04-24,L-019,sale,Event Client,Spring event,18400.00,3864.00,21%,NL_HIGH,INV-L019-04,mb-l055
+L-T056,2026-05-08,L-019,purchase,Stage Rental,Stage equipment,4300.00,903.00,21%,NL_HIGH,STG-0508-7192,mb-l056
+L-T057,2026-04-15,L-020,sale,Employer Group,HR support,17200.00,3612.00,21%,NL_HIGH,INV-L020-04,ex-l057
+L-T058,2026-05-20,L-020,purchase,LinkedIn,Recruitment ads,820.00,172.20,21%,NL_HIGH,LI-0520-88014,ex-l058
+L-T059,2026-06-21,L-020,sale,Employer Group,HR support,16100.00,3381.00,21%,NL_HIGH,INV-L020-06,ex-l059
+L-T060,2026-04-27,L-021,sale,Wind Park,Drone inspection,14800.00,3108.00,21%,NL_HIGH,INV-L021-04,sn-l060
+L-T061,2026-05-12,L-021,purchase,DroneParts NL,Drone repair,1800.00,378.00,21%,NL_HIGH,DP-0512-4773,sn-l061
+L-T062,2026-06-08,L-021,sale,Wind Park,Second inspection,9200.00,1932.00,21%,NL_HIGH,INV-L021-06,sn-l062
+L-T063,2026-04-29,L-022,sale,Hospital Client,Device design,28800.00,6048.00,21%,NL_HIGH,INV-L022-04,tw-l063
+L-T064,2026-05-30,L-022,purchase,Prototype Lab,Prototype test,5400.00,1134.00,21%,NL_HIGH,PLAB-0530-1196,tw-l064
+L-T065,2026-06-30,L-022,sale,Hospital Client,Device design,22100.00,4641.00,21%,NL_HIGH,INV-L022-06,tw-l065
+L-T066,2026-04-20,L-023,sale,Harbor Client,Repair project,26400.00,5544.00,21%,NL_HIGH,INV-L023-04,mb-l066
+L-T067,2026-05-04,L-023,purchase,Tool Supplier,Special tools," 2,600.00 ",546.00,21%,NL_HIGH,TS-0504-6370,mb-l067
+L-T068,2026-06-15,L-023,sale,Harbor Client,Repair project,21700.00,4557.00,21%,NL_HIGH,INV-L023-06,mb-l068
+L-T069,2026-04-05,L-024,sale,Training Client,Quarter training,17600.00,3696.00,21%,NL_HIGH,INV-L024-04,ex-l069
+L-T070,2026-05-15,L-024,purchase,Hotel Utrecht,Trainer hotel,960.00,86.40,9%,NL_LOW,,ex-l070
+L-T071,2026-06-18,L-024,sale,Training Client,Extra training,7900.00,1659.00,21%,NL_HIGH,INV-L024-06,ex-l071

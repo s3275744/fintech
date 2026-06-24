@@ -1,0 +1,48 @@
+transaction_id,date,client_id,direction,counterparty,description,amount,vat_amount,vat_rate,vat_code,receipt_id,source_ledger_id
+M-T001,2026-04-02,M-001,sale,Restaurant Bardo,Website sprint,8200.00,1722.00,21%,NL_HIGH,INV-M001-04,mb-m001
+M-T002,2026-04-15,M-001,purchase,TransIP,Hosting,240.00,50.40,21%,NL_HIGH,TRIP-0415-93281,mb-m002
+M-T003,2026-06-20,M-001,sale,Lentis Coaching,Landing page,3800.00,798.00,21%,NL_HIGH,INV-M001-06,mb-m003
+M-T004,2026-04-10,M-002,sale,Van Rijn Bouw,Construction advice,14750.00,3097.50,21%,NL_HIGH,INV-M002-04,tw-m004
+M-T005,2026-05-18,M-002,purchase,AutoLease Rijnmond,Lease cost van,1120.00,235.20,21%,NL_HIGH,ALR-0518-2047,tw-m005
+M-T006,2026-06-11,M-002,sale,Project Kade,Site inspection,4600.00,966.00,21%,NL_HIGH,INV-M002-06,tw-m006
+M-T007,2026-04-12,M-003,sale,Gallery Zuid,Art workshop,3100.00,0.00,0%,NL_ZERO,INV-M003-04,mb-m007
+M-T008,2026-05-12,M-003,purchase,Sligro,Workshop materials,280.00,58.80,21%,NL_HIGH,,mb-m008
+M-T009,2026-06-03,M-003,sale,Private buyer,Illustration package,3400.00,0.00,0%,NL_ZERO,INV-M003-06,mb-m009
+M-T010,2026-04-04,M-004,sale,Muller GmbH,Transport Germany,21900.00,0.00,0%,EU_REVERSE,INV-M004-DE,ex-m010
+M-T011,2026-04-21,M-004,purchase,Shell Fleet,Fuel,1840.00,386.40,21%,NL_HIGH,SHF-0421-77806,ex-m011
+M-T012,2026-05-22,M-004,sale,Port Client NL,Local transport,9800.00,2058.00,21%,NL_HIGH,INV-M004-05,ex-m012
+M-T013,2026-04-17,M-005,sale,Vista HR,Consulting April,6250.00,1312.50,21%,NL_HIGH,INV-M005-04,tw-m013
+M-T014,2026-05-13,M-005,purchase,Microsoft,Software,144.00,30.24,21%,NL_HIGH,MSFT-0513-4402,tw-m014
+M-T015,2026-06-17,M-005,sale,Vista HR,Consulting June,5900.00,1239.00,21%,NL_HIGH,INV-M005-06,tw-m015
+M-T016,2026-04-08,M-006,sale,Woningfonds,Schilderswerk,11800.00,2478.00,21%,NL_HIGH,INV-M006-04,sn-m016
+M-T017,2026-05-06,M-006,purchase,Verfgroothandel,Paint supplies,2120.00,445.20,21%,NL_HIGH,VG-0506-7812,sn-m017
+M-T018,2026-05-06,M-006,purchase,Verfgroothandel,Paint supplies,2120.00,445.20,21%,NL_HIGH,VG-0506-7812-KOPIE,sn-m018
+M-T019,2026-04-14,M-007,sale,Book Publisher,Translation batch,4275.00,897.75,21%,NL_HIGH,INV-M007-04,mb-m019
+M-T020,2026-06-01,M-007,purchase,DeepL Pro,Translation software,89.00,18.69,21%,NL_HIGH,DPL-0601-3188,mb-m020
+M-T021,2026-04-19,M-008,sale,Wedding Client,Photo package,3920.00,823.20,21%,NL_HIGH,INV-M008-04,mb-m021
+M-T022,2026-05-09,M-008,purchase,Coolblue,Camera battery,149.00,31.29,21%,NL_HIGH,CB-0509-90721,mb-m022
+M-T023,2026-06-14,M-008,sale,Studio Rental,Commercial shoot,2450.00,514.50,21%,NL_HIGH,INV-M008-06,mb-m023
+M-T024,2026-04-03,M-009,sale,Machine Fabriek,Engineering design,22400.00,4704.00,21%,NL_HIGH,INV-M009-04,tw-m024
+M-T025,2026-04-27,M-009,purchase,RS Components,Components,960.00,201.60,21%,NL_HIGH,RS-427-9930,tw-m025
+M-T026,2026-06-15,M-009,sale,Machine Fabriek,Prototype review,11800.00,2478.00,21%,NL_HIGH,INV-M009-06,tw-m026
+M-T027,2026-04-22,M-010,sale,Private Seller,Brokerage fee,14200.00,2982.00,21%,NL_HIGH,INV-M010-04,mb-m027
+M-T028,2026-05-05,M-010,purchase,Funda Business,Listing package,620.00,130.20,21%,NL_HIGH,FND-0505-7714,mb-m028
+M-T029,2026-06-07,M-010,sale,DE Property Partner,Lease advice Germany,3200.00,0.00,0%,EU_REVERSE,INV-M010-DE,mb-m029
+M-T030,2026-04-28,M-011,sale,Stichting Zorg,Legal support,15400.00,3234.00,21%,NL_HIGH,INV-M011-04,ex-m030
+M-T031,2026-05-19,M-011,purchase,SDU,Legal database,480.00,100.80,21%,NL_HIGH,SDU-0519-3402,ex-m031
+M-T032,2026-06-26,M-011,sale,Local Client,Contract review,7200.00,1512.00,21%,NL_HIGH,INV-M011-06,ex-m032
+M-T033,2026-04-05,M-012,sale,School Board,Policy advice,8200.00,1722.00,21%,NL_HIGH,INV-M012-04,sn-m033
+M-T034,2026-05-13,M-012,purchase,NS Business Card,Travel,380.00,34.20,9%,NL_LOW,NSB-0513-2289,sn-m034
+M-T035,2026-06-10,M-012,sale,School Board,Follow-up,4100.00,861.00,21%,NL_HIGH,INV-M012-06,sn-m035
+M-T036,2026-04-16,M-013,sale,Woonzorg Installatie,Installation project,18450.00,3874.50,21%,NL_HIGH,INV-M013-04,tw-m036
+M-T037,2026-05-02,M-013,purchase,Technische Unie,Parts,3850.00,808.50,21%,NL_HIGH,TU-0502-6841,tw-m037
+M-T038,2026-06-22,M-013,sale,Woonzorg Installatie,Service visit,3600.00,756.00,21%,NL_HIGH,INV-M013-06,tw-m038
+M-T039,2026-04-09,M-014,sale,Antwerp Buyer,Intra-EU goods,17600.00,0.00,0%,EU_REVERSE,INV-M014-BE,mb-m039
+M-T040,2026-05-21,M-014,purchase,Harbor Fees,Import service,1450.00,304.50,21%,NL_HIGH,,mb-m040
+M-T041,2026-06-12,M-014,sale,Rotterdam Store,Local goods,9500.00,1995.00,21%,NL_HIGH,INV-M014-06,mb-m041
+M-T042,2026-04-23,M-015,sale,Project Dune,Design phase,16800.00,3528.00,21%,NL_HIGH,INV-M015-04,ex-m042
+M-T043,2026-05-15,M-015,purchase,SketchUp,Design software,310.00,65.10,21%,NL_HIGH,SKU-0515-7730,ex-m043
+M-T044,2026-06-19,M-015,sale,Project Dune,Permit drawings,9200.00,1932.00,21%,NL_HIGH,INV-M015-06,ex-m044
+M-T045,2026-04-30,M-016,sale,Fintech Client,Finance advice,9600.00,2016.00,21%,NL_HIGH,INV-M016-04,tw-m045
+M-T046,2026-05-11,M-016,purchase,Bank Seminar,Training ticket,650.00,136.50,21%,NL_HIGH,BNKSEM-0511-1182,tw-m046
+M-T047,2026-06-24,M-016,sale,Fintech Client,Risk workshop,4600.00,966.00,21%,NL_HIGH,INV-M016-06,tw-m047

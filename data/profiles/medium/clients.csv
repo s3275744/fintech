@@ -1,0 +1,17 @@
+client_id,name,kvk,ledger,sector,vat_scheme,already_filed,ytd_revenue_before_q2
+M-001,De Vries Web Design,67234101,Moneybird,Web design,standard,no,21400.00
+M-002,Jansen Bouwadvies,71045892,Twinfield,Construction advice,standard,no,33000.00
+M-003,Studio Mira van Loon,80113446,Moneybird,Art and design,kor,no,14120.00
+M-004,Bakker Logistics B.V.,33902118,Exact Online,Logistics,standard,no,84000.00
+M-005,El Amrani Consulting,74880013,Twinfield,Consulting,standard,no,17500.00
+M-006,Peters & Zoon Schilders,55217339,SnelStart,Painting,standard,no,22100.00
+M-007,Hofstede Translations,60441587,Moneybird,Translation,standard,yes,12800.00
+M-008,Visser Fotografie,81206544,Moneybird,Photography,standard,no,10300.00
+M-009,Donkervoort Engineering,66741230,Twinfield,Engineering,standard,no,49200.00
+M-010,Hendrikx Makelaardij,58029104,Moneybird,Real estate,standard,no,38800.00
+M-011,Schilder & Partners,72944156,Exact Online,Legal services,standard,no,45000.00
+M-012,Kneepkens Advies,69184562,SnelStart,Advice,standard,no,24000.00
+M-013,Blok Installatiebedrijf,73229341,Twinfield,Installation,standard,no,47100.00
+M-014,Lutz Import Export,64552288,Moneybird,Trade,standard,no,68000.00
+M-015,AMARO Architecten,77003312,Exact Online,Architecture,standard,no,52000.00
+M-016,Freek Financieel Advies,68229954,Twinfield,Financial advice,standard,no,29800.00

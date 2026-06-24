@@ -1,0 +1,2 @@
+client_id,issue_type,severity,detail
+S-005,Foreign B2B reverse charge,flag,German service invoice uses reverse charge and needs buyer VAT-number evidence.

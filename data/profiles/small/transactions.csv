@@ -1,0 +1,25 @@
+transaction_id,date,client_id,direction,counterparty,description,amount,vat_amount,vat_rate,vat_code,receipt_id,source_ledger_id
+S-T001,2026-04-03,S-001,sale,De Groot VvE,Monthly garden maintenance,1850.00,388.50,21%,NL_HIGH,INV-S001-04,mb-1001
+S-T002,2026-04-12,S-001,purchase,Tuinmarkt Leiden,Plants and soil,310.00,65.10,21%,NL_HIGH,TL-0412-7384,mb-1002
+S-T003,2026-05-08,S-001,sale,Prinsenhof Leiden,Garden repair work,920.00,193.20,21%,NL_HIGH,INV-S001-05,mb-1003
+S-T004,2026-04-07,S-002,sale,Local Paper,Article package April,1450.00,304.50,21%,NL_HIGH,INV-S002-04,mb-2001
+S-T005,2026-05-14,S-002,purchase,Adobe Systems,Creative software,72.00,15.12,21%,NL_HIGH,ADBE-514-9021,mb-2002
+S-T006,2026-06-18,S-002,sale,Stadsmuseum,Website copy,980.00,205.80,21%,NL_HIGH,INV-S002-06,mb-2003
+S-T007,2026-04-11,S-003,sale,Fiets Service Katwijk,Repair work,2250.00,0.00,0%,NL_ZERO,INV-S003-04,sn-3001
+S-T008,2026-05-20,S-003,purchase,Toolstation,Parts and tools,410.00,86.10,21%,NL_HIGH,,sn-3002
+S-T009,2026-06-10,S-003,sale,Garage Noordwijk,Machine repair,1950.00,0.00,0%,NL_ZERO,INV-S003-06,sn-3003
+S-T010,2026-04-09,S-004,sale,Van Beek Bouw,Kitchen stone finishing,3100.00,651.00,21%,NL_HIGH,INV-S004-04,sn-4001
+S-T011,2026-05-01,S-004,purchase,Natuursteen Groothandel,Stone plate,1200.00,252.00,21%,NL_HIGH,NSG-0501-2217,sn-4002
+S-T012,2026-06-03,S-004,sale,Villa Meerzicht,Countertop repair,880.00,184.80,21%,NL_HIGH,INV-S004-06,sn-4003
+S-T013,2026-04-15,S-005,sale,Muller GmbH,Electrical installation Germany,5200.00,0.00,0%,EU_REVERSE,INV-S005-DE,ex-5001
+S-T014,2026-05-22,S-005,purchase,Elektroshop NL,Cables and switches,760.00,159.60,21%,NL_HIGH,ESN-522-7406,ex-5002
+S-T015,2026-06-13,S-005,sale,Stichting Licht,Light repair,1800.00,378.00,21%,NL_HIGH,INV-S005-06,ex-5003
+S-T016,2026-04-05,S-006,sale,Office Plus,Cleaning April,1675.00,351.75,21%,NL_HIGH,INV-S006-04,mb-6001
+S-T017,2026-05-05,S-006,sale,Office Plus,Cleaning May,1675.00,351.75,21%,NL_HIGH,INV-S006-05,mb-6002
+S-T018,2026-05-29,S-006,purchase,Jumbo Cash Register,Cleaning supplies,180.00,37.80,21%,NL_HIGH,,mb-6003
+S-T019,2026-04-20,S-007,sale,Hofman IT,Quarterly advice,3900.00,819.00,21%,NL_HIGH,INV-S007-04,tw-7001
+S-T020,2026-05-18,S-007,purchase,NS Business Card,Travel,210.00,18.90,9%,NL_LOW,NSB-240518-0917,tw-7002
+S-T021,2026-06-25,S-007,sale,Hofman IT,Extra advice,1200.00,252.00,21%,NL_HIGH,INV-S007-06,tw-7003
+S-T022,2026-04-18,S-008,sale,Cafe Molen,Logo design,1800.00,378.00,21%,NL_HIGH,INV-S008-04,mb-8001
+S-T023,2026-05-03,S-008,purchase,Adobe systems,Software subscription,96.00,20.16,21%,NL_HIGH,ADBE-0503-6118,mb-8002
+S-T024,2026-06-08,S-008,sale,Studio West,Campaign design,"2,450.00",514.50,21%,NL_HIGH,INV-S008-06,mb-8003

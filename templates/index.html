@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Fiskal sandbox</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="{{ url_for('index', profile=active_profile) }}">Fiskal <span>BTW co-pilot sandbox</span></a>
+  <nav class="profiles" aria-label="Switch profile">
+    {% for profile in profiles %}
+      <a class="profile-link {% if profile == active_profile %}active{% endif %}" href="{{ url_for('index', profile=profile) }}">{{ profile|title }}</a>
+    {% endfor %}
+  </nav>
+</header>
+
+<main class="page">
+  <section class="hero-panel">
+    <div>
+      <p class="eyebrow">{{ dashboard.office.profile_label }}</p>
+      <h1>{{ dashboard.office.office_name }}</h1>
+      <p>{{ dashboard.office.city }} · {{ dashboard.office.quarter }} · deadline {{ dashboard.office.deadline }}</p>
+    </div>
+    <form method="post" action="{{ url_for('reset_demo') }}">
+      <input type="hidden" name="profile" value="{{ active_profile }}">
+      <input type="hidden" name="next" value="{{ url_for('index', profile=active_profile) }}">
+      <button class="btn secondary" type="submit">Reset sandbox state</button>
+    </form>
+  </section>
+
+  {% if session.last_action %}
+    <section class="notice">
+      Filed after approval: {{ session.last_action.approved|length|whole_number }}.
+      Blocked because review is needed: {{ session.last_action.blocked|length|whole_number }}.
+    </section>
+  {% endif %}
+
+  <section class="kpis" aria-label="Quarter summary">
+    <article class="kpi kpi-total"><span>Total clients</span><strong>{{ dashboard.total_clients|whole_number }}</strong><small>Across {{ dashboard.ledgers|length|whole_number }} ledgers</small></article>
+    <article class="kpi kpi-ready"><span>Ready</span><strong>{{ dashboard.ready_count|whole_number }}</strong><small>Can be approved now</small></article>
+    <article class="kpi kpi-review"><span>Review</span><strong>{{ dashboard.review_count|whole_number }}</strong><small>OCR/manual extraction</small></article>
+    <article class="kpi kpi-flagged"><span>Flagged</span><strong>{{ dashboard.flagged_count|whole_number }}</strong><small>Higher risk cases</small></article>
+    <article class="kpi kpi-filed"><span>Filed</span><strong>{{ dashboard.filed_count|whole_number }}</strong><small>Already submitted</small></article>
+    <article class="kpi kpi-vat"><span>VAT due</span><strong>€{{ dashboard.total_vat_due|money }}</strong><small>Queue estimate</small></article>
+  </section>
+
+  <section class="queue-panel">
+    <form class="filters" method="get">
+      <input type="hidden" name="profile" value="{{ active_profile }}">
+      <label>Status
+        <select name="status">
+          {% for value, label in [('all','All'),('ready','Ready'),('review','Review'),('flagged','Flagged'),('filed','Filed')] %}
+            <option value="{{ value }}" {% if status_filter == value %}selected{% endif %}>{{ label }}</option>
+          {% endfor %}
+        </select>
+      </label>
+      <label>Ledger
+        <select name="ledger">
+          <option value="all">All ledgers</option>
+          {% for ledger in dashboard.ledgers %}
+            <option value="{{ ledger }}" {% if ledger_filter == ledger %}selected{% endif %}>{{ ledger }}</option>
+          {% endfor %}
+        </select>
+      </label>
+      <label class="search-label">Search
+        <input name="q" value="{{ search }}" placeholder="Client, KVK, or ID">
+      </label>
+      <button class="btn secondary" type="submit">Apply filters</button>
+    </form>
+
+    <form method="post" action="{{ url_for('approve_clients') }}">
+      <input type="hidden" name="profile" value="{{ active_profile }}">
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Select</th>
+              <th>Client</th>
+              <th>Ledger</th>
+              <th>Revenue</th>
+              <th>VAT due</th>
+              <th>Status</th>
+              <th>Confidence</th>
+              <th>Warning</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for row in rows %}
+              <tr>
+                <td>
+                  {% if row.can_approve %}
+                    <input type="checkbox" name="client_id" value="{{ row.client_id }}" aria-label="Select {{ row.name }}">
+                  {% else %}
+                    <span class="muted">-</span>
+                  {% endif %}
+                </td>
+                <td class="client-cell"><strong>{{ row.name }}</strong><span>KVK {{ row.kvk }} · {{ row.client_id }}</span></td>
+                <td><span class="ledger">{{ row.ledger }}</span></td>
+                <td class="num">€{{ row.revenue|money }}</td>
+                <td class="num">€{{ row.vat_due|money }}</td>
+                <td><span class="pill {{ row.status_key }}">{{ row.status }}</span></td>
+                <td>
+                  <div class="confidence"><span style="width: {{ row.confidence }}%"></span></div>
+                  <small>{{ row.confidence|whole_number }}%</small>
+                </td>
+                <td>{{ row.queue_note }}</td>
+                <td><a class="btn small" href="{{ url_for('client_detail', profile_name=active_profile, client_id=row.client_id) }}">Open</a></td>
+              </tr>
+            {% else %}
+              <tr><td colspan="9" class="empty">No clients match these filters.</td></tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      <div class="actions-row">
+        <button class="btn primary" type="submit">Approve and file selected clients</button>
+        <span>Review and flagged clients are blocked from bulk approval.</span>
+      </div>
+    </form>
+  </section>
+</main>
+</body>
+</html>

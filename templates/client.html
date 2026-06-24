@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ summary.name }} · Fiskal sandbox</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="{{ url_for('index', profile=active_profile) }}">Fiskal <span>BTW co-pilot sandbox</span></a>
+  <nav class="profiles" aria-label="Switch profile">
+    {% for profile in profiles %}
+      <a class="profile-link {% if profile == active_profile %}active{% endif %}" href="{{ url_for('index', profile=profile) }}">{{ profile|title }}</a>
+    {% endfor %}
+  </nav>
+</header>
+
+<main class="page detail-page">
+  <div class="detail-actions">
+    <a class="back-link" href="{{ url_for('index', profile=active_profile) }}"><span class="back-icon" aria-hidden="true">&larr;</span> Back to queue</a>
+    <form method="post" action="{{ url_for('reset_demo') }}">
+      <input type="hidden" name="profile" value="{{ active_profile }}">
+      <input type="hidden" name="next" value="{{ url_for('client_detail', profile_name=active_profile, client_id=summary.client_id) }}">
+      <button class="btn secondary" type="submit">Reset sandbox state</button>
+    </form>
+  </div>
+  <section class="hero-panel">
+    <div>
+      <p class="eyebrow">{{ office.office_name }} · {{ summary.ledger }}</p>
+      <h1>{{ summary.name }}</h1>
+      <p>KVK {{ summary.kvk }} · {{ office.quarter }} · {{ summary.transaction_count|whole_number }} source transactions</p>
+    </div>
+    <div class="status-stack">
+      <span class="pill {{ summary.status_key }}">{{ summary.status }}</span>
+      <strong>{{ summary.confidence|whole_number }}% confidence</strong>
+      {% if summary.open_transaction_issue_count %}
+        <small>{{ summary.open_transaction_issue_count|whole_number }} transaction issue(s) still open</small>
+      {% endif %}
+    </div>
+  </section>
+
+  <section class="split-grid {% if summary.status_key == 'flagged' %}flagged-focus{% elif summary.status_key == 'review' %}review-focus{% endif %}">
+    <article class="panel">
+      <h2>BTW summary</h2>
+      <dl class="summary-list">
+        <div><dt>Revenue</dt><dd>€{{ summary.revenue|money }}</dd></div>
+        <div><dt>Output VAT</dt><dd>€{{ summary.output_vat|money }}</dd></div>
+        <div><dt>Input VAT</dt><dd>€{{ summary.input_vat|money }}</dd></div>
+        <div><dt>VAT due</dt><dd>€{{ summary.vat_due|money }}</dd></div>
+      </dl>
+      {% if summary.can_approve %}
+        <form method="post" action="{{ url_for('approve_clients') }}">
+          <input type="hidden" name="profile" value="{{ active_profile }}">
+          <input type="hidden" name="client_id" value="{{ summary.client_id }}">
+          <button class="btn primary" type="submit">Approve and file this client</button>
+        </form>
+      {% else %}
+        <p class="blocked-note">This client is not ready yet because a source PDF needs human extraction, external evidence is missing, or the case is already filed.</p>
+      {% endif %}
+    </article>
+
+    <article class="panel">
+      <h2>Warnings and rule explanation</h2>
+      {% if summary.warnings %}
+        <ul class="warning-list">
+          {% for warning in summary.warnings %}
+            <li><strong>{{ warning.issue_type }}</strong><span>{{ warning.message }}</span></li>
+          {% endfor %}
+        </ul>
+      {% else %}
+        {% if summary.corrected_transaction_count or summary.queue_note != 'Routine quarter' %}
+          <p>{{ summary.queue_note }}.</p>
+        {% else %}
+          <p>{{ summary.queue_note }}. Known VAT codes, no missing receipts, and no exception rows for this client.</p>
+        {% endif %}
+      {% endif %}
+    </article>
+  </section>
+
+  <section class="panel">
+    <h2>Source transactions</h2>
+    <p class="small-text transaction-intro">Review means the value should be in the source PDF, but OCR confidence is low. The bookkeeper checks the PDF first and enters the value manually; contacting the client is only a fallback. Flagged means external evidence is required.</p>
+    <div class="table-wrap flat">
+      <table>
+        <thead><tr><th class="col-status">Status</th><th class="col-date">Date</th><th class="col-id">ID</th><th class="col-type">Type</th><th class="col-counterparty">Counterparty</th><th class="col-description">Description</th><th class="col-amount">Amount</th><th class="col-vat">VAT</th><th class="col-code">Code</th><th class="col-vat-comment">VAT comment</th><th class="col-receipt">Receipt</th><th class="col-evidence">VAT evidence</th><th class="col-transport">Transport proof</th><th class="col-document">Document</th></tr></thead>
+        <tbody>
+          {% for tx in summary.transactions %}
+            <tr class="transaction-row {{ tx.review_status }}">
+              <td class="col-status"><span class="tx-status {{ tx.review_status }}">{{ tx.review_status|title }}</span></td>
+              <td class="col-date nowrap">{{ tx.date }}</td>
+              <td class="col-id nowrap">{{ tx.transaction_id }}</td>
+              <td class="col-type">{{ tx.direction }}</td>
+              <td class="col-counterparty">{{ tx.counterparty }}</td>
+              <td class="col-description">{{ tx.description }}</td>
+              <td class="col-amount num">€{{ tx.amount|money }}</td>
+              <td class="col-vat num">€{{ tx.vat_amount|money }}</td>
+              <td class="col-code nowrap">{{ tx.vat_code }}</td>
+              <td class="vat-comment">
+                {% if tx.vat_comment %}
+                  {{ tx.vat_comment }}
+                {% else %}
+                  <span class="muted">-</span>
+                {% endif %}
+              </td>
+              <td class="col-receipt receipt-cell {{ tx.receipt.status }}">
+                {% if tx.receipt.status in ["missing", "entered"] %}
+                  <strong>{{ tx.receipt.value }}</strong>
+                  <small>{{ tx.receipt.label }}</small>
+                {% elif tx.receipt.status == "present" %}
+                  {{ tx.receipt.value }}
+                {% else %}
+                  <span class="muted">-</span>
+                {% endif %}
+              </td>
+              <td class="col-evidence evidence-cell {{ tx.evidence.status }}">
+                {% if tx.evidence.required %}
+                  <strong>{{ tx.evidence.vat_value }}</strong>
+                  <small>{{ tx.evidence.vat_label }}</small>
+                {% else %}
+                  <span class="muted">-</span>
+                {% endif %}
+              </td>
+              <td class="col-transport evidence-cell {% if tx.evidence.transport_required %}{{ tx.evidence.status }}{% elif tx.evidence.required %}not-required{% else %}not-required{% endif %}">
+                {% if tx.evidence.transport_required %}
+                  <strong>{{ tx.evidence.transport_value }}</strong>
+                  <small>{{ tx.evidence.transport_label }}</small>
+                {% elif tx.evidence.required %}
+                  <strong>{{ tx.evidence.transport_value }}</strong>
+                  <small>{{ tx.evidence.transport_label }}</small>
+                {% else %}
+                  <span class="muted">-</span>
+                {% endif %}
+              </td>
+              <td class="col-document"><a class="doc-link" href="{{ url_for('sample_document', profile_name=active_profile, transaction_id=tx.transaction_id) }}" target="_blank">Sample PDF</a></td>
+            </tr>
+            {% if tx.review_items %}
+              <tr class="transaction-review-row {{ tx.review_status }}">
+                <td colspan="14">
+                  <div class="review-items">
+                    {% for item in tx.review_items %}
+                      <article class="review-item {% if item.resolved %}resolved{% else %}open{% endif %}">
+                        <div>
+                          <strong>{{ item.issue_type }}</strong>
+                          {% if not item.requires_evidence %}<small class="review-target">Fill column: Receipt</small>{% endif %}
+                          <span>{{ item.message }}</span>
+                          {% if item.resolved %}
+                            {% if item.requires_evidence %}
+                              <small>Evidence accepted: {{ item.evidence_record.analysis }}</small>
+                            {% else %}
+                              <small>Human extraction: {{ item.correction_note }}</small>
+                            {% endif %}
+                          {% endif %}
+                        </div>
+                        {% if item.requires_evidence %}
+                          {% if item.evidence_record %}
+                            <div class="email-thread">
+                              <div class="email-message outgoing">
+                                <span>To client</span>
+                                <strong>{{ item.evidence_record.subject }}</strong>
+                                <p>{{ item.evidence_record.request }}</p>
+                              </div>
+                              <div class="email-message incoming">
+                                <span>Client reply</span>
+                                <p>{{ item.evidence_record.reply }}</p>
+                                <a class="doc-link" href="{{ url_for('evidence_document', profile_name=active_profile, transaction_id=tx.transaction_id) }}" target="_blank">Received evidence PDF</a>
+                              </div>
+                              {% if item.evidence_record.accepted %}
+                                <div class="analysis-result">{{ item.evidence_record.analysis }}</div>
+                              {% else %}
+                                <form method="post" action="{{ url_for('analyse_evidence') }}" class="evidence-form">
+                                  <input type="hidden" name="profile" value="{{ active_profile }}">
+                                  <input type="hidden" name="client_id" value="{{ summary.client_id }}">
+                                  <input type="hidden" name="transaction_id" value="{{ tx.transaction_id }}">
+                                  <button class="btn small" type="submit">Analyse received PDF</button>
+                                </form>
+                              {% endif %}
+                            </div>
+                          {% else %}
+                            <form method="post" action="{{ url_for('request_evidence') }}" class="evidence-form">
+                              <input type="hidden" name="profile" value="{{ active_profile }}">
+                              <input type="hidden" name="client_id" value="{{ summary.client_id }}">
+                              <input type="hidden" name="transaction_id" value="{{ tx.transaction_id }}">
+                              <input type="hidden" name="issue_type" value="{{ item.issue_type }}">
+                              <button class="btn small" type="submit">Contact company for evidence</button>
+                            </form>
+                          {% endif %}
+                        {% elif not item.resolved %}
+                          <div class="review-actions">
+                            <form method="post" action="{{ url_for('correct_transaction') }}" class="correction-form">
+                              <input type="hidden" name="profile" value="{{ active_profile }}">
+                              <input type="hidden" name="client_id" value="{{ summary.client_id }}">
+                              <input type="hidden" name="transaction_id" value="{{ tx.transaction_id }}">
+                              <label>Receipt ID from PDF
+                                <input name="correction_note" required placeholder="Example: TS 520-78416">
+                              </label>
+                              <button class="btn small" type="submit">Mark reviewed</button>
+                            </form>
+                            {% if item.review_contact %}
+                              <div class="email-thread compact">
+                                <div class="email-message outgoing">
+                                  <span>Fallback to client</span>
+                                  <strong>{{ item.review_contact.subject }}</strong>
+                                  <p>{{ item.review_contact.request }}</p>
+                                </div>
+                                <div class="email-message incoming">
+                                  <span>Client reply</span>
+                                  <p>{{ item.review_contact.reply }}</p>
+                                </div>
+                                <form method="post" action="{{ url_for('use_review_reply') }}" class="evidence-form">
+                                  <input type="hidden" name="profile" value="{{ active_profile }}">
+                                  <input type="hidden" name="client_id" value="{{ summary.client_id }}">
+                                  <input type="hidden" name="transaction_id" value="{{ tx.transaction_id }}">
+                                  <button class="btn small" type="submit">Use client reply</button>
+                                </form>
+                              </div>
+                            {% else %}
+                              <form method="post" action="{{ url_for('request_review_help') }}" class="fallback-form">
+                                <input type="hidden" name="profile" value="{{ active_profile }}">
+                                <input type="hidden" name="client_id" value="{{ summary.client_id }}">
+                                <input type="hidden" name="transaction_id" value="{{ tx.transaction_id }}">
+                                <input type="hidden" name="issue_type" value="{{ item.issue_type }}">
+                                <button class="btn small secondary" type="submit">Contact client if unreadable</button>
+                              </form>
+                            {% endif %}
+                          </div>
+                        {% endif %}
+                      </article>
+                    {% endfor %}
+                  </div>
+                </td>
+              </tr>
+            {% endif %}
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="panel payload-panel">
+    <h2>Simulated ledger API payload</h2>
+    <p>This is the ledger payload Fiskal would prepare after approval. It includes compact source rows and resolved review evidence, but no external API call is made.</p>
+    {% if payload %}
+      <pre>{{ payload|tojson(indent=2) }}</pre>
+    {% else %}
+      <pre>{
+  "notice": "No payload is prepared because this client still needs review."
+}</pre>
+    {% endif %}
+  </section>
+</main>
+</body>
+</html>

@@ -1,0 +1,13 @@
+{
+  "name": "fiskal-vat-review-sandbox",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Fiskal BTW co-pilot sandbox browser tests",
+  "scripts": {
+    "test:e2e": "playwright test",
+    "test:e2e:headed": "playwright test --headed"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.46.1"
+  }
+}
