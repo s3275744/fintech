@@ -177,6 +177,10 @@ def analyze_client(
     review_contacts = review_contacts or {}
     client_transactions = [tx for tx in transactions if tx["client_id"] == client["client_id"]]
     client_exceptions = [item for item in exceptions if item["client_id"] == client["client_id"]]
+    transaction_sort_keys = {
+        tx["transaction_id"]: (tx["date"], position)
+        for position, tx in enumerate(client_transactions)
+    }
 
     warnings = []
     transaction_reviews = defaultdict(list)
@@ -251,6 +255,15 @@ def analyze_client(
                 )
         else:
             add_warning(item["issue_type"], item["severity"], item["detail"], penalty_key)
+
+    def warning_sort_key(position_and_warning):
+        original_position, item = position_and_warning
+        transaction_key = transaction_sort_keys.get(item.get("transaction_id"))
+        if transaction_key:
+            return (0, transaction_key[0], transaction_key[1], original_position)
+        return (1, "9999-12-31", original_position, original_position)
+
+    warnings = [position_and_warning[1] for position_and_warning in sorted(enumerate(warnings), key=warning_sort_key)]
 
     vat_due = output_vat - input_vat
     has_flag = any(item["severity"] == "flag" for item in warnings)

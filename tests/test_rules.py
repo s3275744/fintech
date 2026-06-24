@@ -96,6 +96,15 @@ def test_flagged_client_has_lower_confidence_than_ready_client():
     assert flagged["confidence"] < ready["confidence"]
 
 
+def test_client_warnings_follow_transaction_chronology():
+    dashboard = build_dashboard(load_profile("medium"))
+    summary = find_summary(dashboard, "M-014")
+
+    assert [transaction["transaction_id"] for transaction in summary["transactions"]] == ["M-T039", "M-T040", "M-T041"]
+    assert [warning["transaction_id"] for warning in summary["warnings"]] == ["M-T039", "M-T040"]
+    assert [warning["issue_type"] for warning in summary["warnings"]] == ["Intra-EU goods", "Unclear source PDF"]
+
+
 def test_review_client_cannot_be_approved_in_bulk():
     dashboard = build_dashboard(load_profile("small"))
     review = find_summary(dashboard, "S-003")
