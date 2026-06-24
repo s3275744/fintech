@@ -4,6 +4,8 @@
 ![Playwright Tested](https://img.shields.io/badge/Playwright-tested-2EAD33?logo=playwright&logoColor=white)
 ![Azure Container Apps](https://img.shields.io/badge/Azure%20Container%20Apps-deployed-0078D4?logo=microsoftazure&logoColor=white)
 
+Live demo: [https://fiskal-app.happycliff-ffe64e1f.swedencentral.azurecontainerapps.io](https://fiskal-app.happycliff-ffe64e1f.swedencentral.azurecontainerapps.io)
+
 Fiskal is a sandbox MVP for a Dutch bookkeeping-office VAT review co-pilot. It helps a bookkeeper inspect quarterly BTW work before filing by combining sample ledger exports, generated source PDFs, deterministic VAT checks, human review flows, and a simulated ledger write-back payload.
 
 The app is intentionally not connected to real customers, ledgers, banks, SBR, Digipoort, or tax-filing systems.
@@ -83,10 +85,6 @@ The Bicep template in `infra/main.bicep` deploys the app to Azure Container Apps
 - Log Analytics workspace
 - Container Apps managed environment
 - Public Container App with `/healthz` probes
-
-Current hosted URL:
-
-`https://fiskal-app.happycliff-ffe64e1f.swedencentral.azurecontainerapps.io`
 
 Deploy from the repository root:
 
