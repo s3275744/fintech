@@ -16,11 +16,11 @@ The app is intentionally not connected to real customers, ledgers, banks, SBR, D
 
 ## Screenshots
 
-**Office review queue** — one view of every client's readiness, with VAT totals, statuses, confidence, and the warning behind each row.
+**Office review queue**: one view of every client's readiness, with VAT totals, statuses, confidence, and the warning behind each row.
 
 ![Fiskal office review queue](docs/dashboard.png)
 
-**Client detail** — the VAT summary, the row-level rule explanation, and the evidence/review actions behind a flagged client.
+**Client detail**: the VAT summary, the row-level rule explanation, and the evidence/review actions behind a flagged client.
 
 ![Fiskal client detail with a flagged reverse-charge row](docs/client-detail.png)
 
