@@ -14,6 +14,34 @@ The app is intentionally not connected to real customers, ledgers, banks, SBR, D
 
 `fintech` `vat` `btw` `bookkeeping` `flask` `docker` `azure-container-apps` `bicep` `playwright` `ai-agents` `github-copilot` `csv-data` `dutch-tax` `sandbox`
 
+## Screenshots
+
+**Office review queue** — one view of every client's readiness, with VAT totals, statuses, confidence, and the warning behind each row.
+
+![Fiskal office review queue](docs/dashboard.png)
+
+**Client detail** — the VAT summary, the row-level rule explanation, and the evidence/review actions behind a flagged client.
+
+![Fiskal client detail with a flagged reverse-charge row](docs/client-detail.png)
+
+## Contents
+
+- [Requirements](#requirements)
+- [Install And Run](#install-and-run)
+- [Configuration](#configuration)
+- [Run Tests](#run-tests)
+- [Run With Docker](#run-with-docker)
+- [Deploy To Azure](#deploy-to-azure)
+- [Core Workflow](#core-workflow)
+- [Status Meaning](#status-meaning)
+- [Rule Engine](#rule-engine)
+- [HTTP Endpoints](#http-endpoints)
+- [Sample Data](#sample-data)
+- [Generated PDFs](#generated-pdfs)
+- [Security And Limitations](#security-and-limitations)
+- [Project Structure](#project-structure)
+- [Agent Orchestration](#agent-orchestration)
+
 ## Requirements
 
 - Python `3.12` (`3.12.7` was used for development and testing)
@@ -48,6 +76,24 @@ python app.py
 ```
 
 Open `http://localhost:8000`.
+
+## Configuration
+
+The app reads a few optional environment variables. Defaults are tuned for a local sandbox run, so none are required to start.
+
+| Variable | Default | Purpose |
+| --- | --- | --- |
+| `PORT` | `8000` | Port the Flask server listens on. |
+| `FLASK_SECRET_KEY` | `fiskal-demo-secret-key` | Signs the session cookie that stores approvals, corrections, and evidence. **Set a strong random value before any non-local use.** |
+| `FLASK_DEBUG` | `0` | Set to `1` to enable the Flask debugger and auto-reload. Keep it `0` outside local development. |
+
+Example (Windows PowerShell):
+
+```powershell
+$env:FLASK_SECRET_KEY = "replace-with-a-long-random-string"
+$env:PORT = "8000"
+python app.py
+```
 
 ## Run Tests
 
@@ -121,6 +167,24 @@ Manual Azure commands are documented in `infra/README.md`.
 - Uses fixed warning penalties and a small deterministic client-ID adjustment.
 - Keeps final approval with the bookkeeper.
 
+## HTTP Endpoints
+
+All state lives in the signed session cookie; there is no database. The main routes are:
+
+| Method | Route | Purpose |
+| --- | --- | --- |
+| `GET` | `/` | Office review queue with status, ledger, and search filters. |
+| `GET` | `/client/<profile>/<client_id>` | Client detail: VAT summary, warnings, transactions, and payload preview. |
+| `GET` | `/healthz` | Liveness probe used by Docker and Azure. |
+| `POST` | `/approve` | Approve and file the selected `Ready` clients in the sandbox. |
+| `POST` | `/correct-transaction` | Enter a missing receipt value read from the source PDF. |
+| `POST` | `/request-review-help` / `/use-review-reply` | Simulate contacting the client for an unreadable value, then apply the reply. |
+| `POST` | `/request-evidence` / `/analyse-evidence` | Request and then accept the simulated compliance evidence PDF. |
+| `POST` | `/reset` | Clear all sandbox session state. |
+| `GET` | `/api/payload/<profile>/<client_id>` | JSON preview of the simulated ledger write-back payload. |
+| `GET` | `/sample-document/<profile>/<transaction_id>.pdf` | Generated source invoice or receipt PDF. |
+| `GET` | `/evidence-document/<profile>/<transaction_id>.pdf` | Generated evidence PDF. |
+
 ## Sample Data
 
 The repository includes three bookkeeping-office profiles:
@@ -152,6 +216,21 @@ Included edge cases:
 Fiskal generates local sample PDFs for source invoices, receipts, and evidence documents. These PDFs are generated from sample data and do not contain real customer documents.
 
 The test suite includes a PyMuPDF layout check that verifies generated PDF text stays inside the page and that money columns do not overlap.
+
+## Security And Limitations
+
+This is a sandbox MVP, and several properties are deliberate:
+
+- **No real data.** All ledgers, clients, transactions, and documents are generated sample data. The repository contains no real customer records, API credentials, or production secrets.
+- **No external calls.** Approving a client only builds and previews a payload. No request is made to any ledger, bank, SBR, or Digipoort endpoint.
+- **Session-only state.** Approvals, corrections, and evidence live in the signed Flask session cookie and reset when the session ends or via `/reset`. There is no database and no multi-user persistence.
+- **The score is a guide, not advice.** The confidence score prioritises review work; it is not tax advice, and final approval always stays with the bookkeeper.
+
+Before any non-sandbox use, the following are required:
+
+- Set a strong random `FLASK_SECRET_KEY` and run behind HTTPS so the session cookie cannot be forged.
+- Add authentication and per-office access control; today every visitor shares the same sandbox session.
+- Replace sample data and the simulated payload with real, authenticated ledger and tax-filing integrations.
 
 ## Project Structure
 
